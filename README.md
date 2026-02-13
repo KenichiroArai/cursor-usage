@@ -1,4 +1,5 @@
 # cursor-usage
+
 Cursorの使用量の記録を公開する。
 
 ## 開発時の実行方法
