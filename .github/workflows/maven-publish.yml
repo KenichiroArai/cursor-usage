@@ -1,5 +1,5 @@
 # このワークフローは新しいタグ（v*）がプッシュされた時、またはGitHubリリースが作成された時に実行され、
-# MavenプロジェクトのビルドとGitHub Packagesへの公開を自動的に行います。
+# docs/ を GitHub Pages にデプロイします。
 name: Release and Publish
 
 on:
@@ -8,95 +8,39 @@ on:
       - "v*"
   release:
     types: [created]
+  # main ブランチへの push でもデプロイする場合は以下のコメントを外してください
+  # push:
+  #   branches:
+  #     - main
 
 permissions:
-  contents: write
-  packages: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      # ソースコードをチェックアウト
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Java開発環境のセットアップ
-      - name: Set up JDK 25
-        uses: actions/setup-java@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          java-version: "25"
-          distribution: "temurin"
-          cache: maven
-          server-id: github-kmg-core
-          settings-path: ${{ github.workspace }}
+          path: docs
 
-      # Maven設定の構成
-      - name: Configure Maven settings.xml
-        uses: s4u/maven-settings-action@v3.0.0
-        with:
-          servers: |
-            [{
-              "id": "github-kmg-core",
-              "username": "${{ github.actor }}",
-              "password": "${{ secrets.GITHUB_TOKEN }}"
-            }]
-
-      # バージョン情報の確認
-      - name: バージョン情報の確認
-        run: |
-          echo "バージョン情報の確認を開始します..."
-          mvn versions:display-property-updates
-
-      # プロジェクトのビルドとテスト
-      - name: テストとビルド
-        run: |
-          echo "Mavenビルドとテストプロセスを開始します..."
-          mvn -B verify --file pom.xml
-          echo "Mavenビルドとテストが完了しました"
-
-      # カバレッジレポートのアップロード
-      - name: カバレッジレポートのアップロード
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: target/site/jacoco/
-          retention-days: 7
-
-      # Javadocの生成
-      - name: Javadocの生成
-        run: |
-          echo "Javadocの生成を開始します..."
-          mvn javadoc:javadoc
-          echo "Javadocの生成が完了しました"
-
-      # Javadocのアップロード
-      - name: Javadocのアップロード
-        uses: actions/upload-artifact@v4
-        with:
-          name: javadoc
-          path: target/site/apidocs/
-          retention-days: 7
-
-      # GitHub Packagesへの公開
-      - name: Publish to GitHub Packages
-        run: |
-          echo "GitHub Packagesへの公開を開始します..."
-          mvn deploy
-          echo "パッケージの公開が完了しました"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # GitHubリリースの作成
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: target/kmg-core-*.jar
-          generate_release_notes: true
-          body: |
-            ## 成果物
-            - JARファイル: `target/kmg-core-*.jar`
-
-            ## テスト結果
-            - JUnitテストレポート: `target/surefire-reports/`
-            - カバレッジレポート: `target/site/jacoco/`
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
