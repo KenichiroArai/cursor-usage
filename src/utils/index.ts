@@ -60,6 +60,14 @@ export function formatDate(serial: number | string | unknown): string {
   return date.toLocaleDateString('ja-JP');
 }
 
+/** Date を yyyy-mm-dd 形式の文字列にフォーマット */
+export function formatDateToYYYYMMDD(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 export function formatDifference(
   value: number | null | undefined,
   isPercentage = false

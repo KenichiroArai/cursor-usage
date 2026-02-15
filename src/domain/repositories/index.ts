@@ -1,7 +1,7 @@
 'use client';
 
 import * as XLSX from 'xlsx';
-import { parseCSVLine, formatDate } from '@/utils';
+import { parseCSVLine, formatDate, formatDateToYYYYMMDD } from '@/utils';
 import type {
   RecordData,
   SummaryRecord,
@@ -61,7 +61,7 @@ export async function loadSummaryData(): Promise<SummaryRecord[]> {
     if (isNaN(date.getTime())) continue;
     result.push({
       date,
-      dateStr: date.toLocaleDateString('ja-JP'),
+      dateStr: formatDateToYYYYMMDD(date),
       model: String(row[1] || ''),
       cacheRead: parseFloat(String(row[2] || 0)) || 0,
       cacheWrite: parseFloat(String(row[3] || 0)) || 0,
@@ -145,11 +145,19 @@ export async function loadIncludedUsageData(): Promise<IncludedUsageRecord[]> {
     const input = inputWithCache + inputWithoutCache;
 
     if (
-      dateCell &&
+      dateCell !== undefined &&
+      dateCell !== null &&
       String(dateCell).trim() &&
       !String(dateCell).includes('Total')
     ) {
-      const d = new Date(String(dateCell));
+      let d: Date;
+      if (dateCell instanceof Date) {
+        d = dateCell;
+      } else if (typeof dateCell === 'number') {
+        d = new Date((dateCell - 25569) * 86400 * 1000);
+      } else {
+        d = new Date(String(dateCell));
+      }
       if (!isNaN(d.getTime())) {
         currentDate = d;
         if (input < previousInput && previousInput > 0) {
@@ -163,7 +171,7 @@ export async function loadIncludedUsageData(): Promise<IncludedUsageRecord[]> {
     if (currentDate && model) {
       result.push({
         date: currentDate,
-        dateStr: currentDate.toLocaleDateString('ja-JP'),
+        dateStr: formatDateToYYYYMMDD(currentDate),
         model,
         input,
         inputWithCache,

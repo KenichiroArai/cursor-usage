@@ -19,6 +19,7 @@ import {
   formatDifference,
   getDifferenceClass,
   calculateDifferenceWithReset,
+  formatDateToYYYYMMDD,
 } from '@/utils';
 import { ROUTES, CHART_COLORS } from '@/constants';
 
@@ -64,13 +65,13 @@ function processModelData(
   const uniqueDates = Array.from(new Set(data.map((r) => r.dateStr)))
     .map((dateStr) => new Date(dateStr))
     .sort((a, b) => a.getTime() - b.getTime())
-    .map((d) => d.toLocaleDateString('ja-JP'));
+    .map((d) => formatDateToYYYYMMDD(d));
 
   data.forEach((record) => {
     const model = record.model;
-    const dateStr = record.dateStr;
+    const dateKey = formatDateToYYYYMMDD(record.date);
     if (!modelData[model]) modelData[model] = {};
-    if (!modelData[model][dateStr]) modelData[model][dateStr] = 0;
+    if (!modelData[model][dateKey]) modelData[model][dateKey] = 0;
     const raw = record[fieldName];
     const value =
       fieldName === 'apiCost' || fieldName === 'costToYou'
@@ -78,7 +79,7 @@ function processModelData(
         : typeof raw === 'number'
           ? raw
           : parseInt(String(raw), 10) || 0;
-    modelData[model][dateStr] += value;
+    modelData[model][dateKey] += value;
   });
 
   return { modelData, uniqueDates };
@@ -432,7 +433,9 @@ export function Fa004IncludedUsage() {
                           <div className="stat-item">
                             <span className="stat-label">最新使用日:</span>
                             <span className="stat-value">
-                              {latest?.dateStr ?? '-'}
+                              {latest
+                                ? formatDateToYYYYMMDD(latest.date)
+                                : '-'}
                             </span>
                           </div>
                           <div className="stat-item">
@@ -897,8 +900,8 @@ export function Fa004IncludedUsage() {
                       return text;
                     };
                     return (
-                      <tr key={`${row.dateStr}-${row.model}-${idx}`}>
-                        <td>{row.dateStr}</td>
+                      <tr key={`${formatDateToYYYYMMDD(row.date)}-${row.model}-${idx}`}>
+                        <td>{formatDateToYYYYMMDD(row.date)}</td>
                         <td>{row.model}</td>
                         <td className="text-end">
                           {renderNum(
