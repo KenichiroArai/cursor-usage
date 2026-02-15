@@ -559,11 +559,6 @@ export function Fa004IncludedUsage() {
                         </div>
                       </div>
                     </div>
-                    {latest && (
-                      <div className="usage-info">
-                        {`Total Tokens: ${latest.totalTokens.toLocaleString()}\nInput (W/CACHE WRITE): ${latest.inputWithCache.toLocaleString()}\nInput (W/O CACHE WRITE): ${latest.inputWithoutCache.toLocaleString()}\nCache Read: ${latest.cacheRead.toLocaleString()}\nOutput: ${latest.output.toLocaleString()}\nAPI Cost: ${latest.apiCost}\nCost to You: ${latest.costToYou}`}
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
