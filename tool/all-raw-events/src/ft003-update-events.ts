@@ -3,7 +3,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const baseDir = path.join(__dirname, '..');
+const baseDir = path.join(__dirname, '..'); // tool/all-raw-events
+const projectRoot = path.join(baseDir, '..', '..');
+const dataDir = path.join(projectRoot, 'public', 'data');
 
 function parseCSVLine(line: string): string[] {
   const values: string[] = [];
@@ -133,9 +135,13 @@ function moveToArchive(
   }
 }
 
+function ensureDir(p: string) {
+  if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true });
+}
+
 function main() {
+  ensureDir(dataDir);
   const inputDir = path.join(baseDir, 'input');
-  const dataDir = path.join(baseDir, 'data');
   const outputFile = path.join(dataDir, 'usage-events.csv');
   const archiveDir = path.join(inputDir, 'archive', 'usage-events');
 

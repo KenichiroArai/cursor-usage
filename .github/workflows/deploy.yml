@@ -26,9 +26,6 @@ jobs:
 
       - run: npm ci
 
-      - name: Copy data for build
-        run: node scripts/copy-data.js
-
       - name: Build Next.js
         run: npm run build
         env:
