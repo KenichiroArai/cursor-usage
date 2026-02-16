@@ -1,11 +1,10 @@
 # アプリケーションのバージョン情報
 version:
-  current: "v0.7.0"
+  current: "v0.8.0"
 
-# GitHubリンク情報
+# GitHubリンク情報（リリースURL）
 github:
-  issue_url: "https://github.com/KenichiroArai/Blog/issues/60"
-  issue_number: 60
+  release_url: "https://github.com/KenichiroArai/cursor-usage/releases/tag/v0.8.0"
 
 # 機能概要
 features:
@@ -18,4 +17,4 @@ features:
 metadata:
   title: "アプリケーション情報"
   description: "Cursor使用状況管理アプリケーション"
-  last_updated: "2024-09-18"
+  last_updated: "2026-02-16"

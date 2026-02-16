@@ -266,12 +266,12 @@ export async function loadUsageData(): Promise<Array<Record<string, unknown>>> {
 
 export async function loadVersionInfo(): Promise<{
   version: { current: string };
-  github?: { issue_url: string; issue_number: number };
+  github?: { release_url: string };
   features?: string[];
   metadata?: Record<string, string>;
 }> {
   const response = await fetch(getDataUrl('/fc200-version-info.yaml'));
-  if (!response.ok) return { version: { current: 'v0.7.0' } };
+  if (!response.ok) return { version: { current: 'v0.8.0' } };
   const text = await response.text();
   const yaml = await import('js-yaml');
   return yaml.load(text) as ReturnType<typeof loadVersionInfo> extends Promise<

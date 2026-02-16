@@ -21,9 +21,9 @@ export function Fc200VersionModal() {
 
   const version = info?.version?.current ?? '読み込み中...';
   const title = info?.metadata?.title ?? 'アプリケーション情報';
-  const githubUrl = info?.github?.issue_url ?? '#';
-  const issueText = info?.github?.issue_number
-    ? `GitHub Issue #${info.github.issue_number}`
+  const githubUrl = info?.github?.release_url ?? '#';
+  const releaseLabel = info?.github?.release_url
+    ? 'GitHub リリース'
     : '読み込み中...';
   const features = info?.features ?? [];
 
@@ -67,7 +67,7 @@ export function Fc200VersionModal() {
                         rel="noopener noreferrer"
                         className="link-primary"
                       >
-                        <i className="bi bi-github" /> {issueText}
+                        <i className="bi bi-github" /> {releaseLabel}
                       </a>
                     </p>
                   </div>

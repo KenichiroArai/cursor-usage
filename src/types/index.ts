@@ -65,7 +65,7 @@ export interface UsageTokensRecord {
 
 export interface VersionInfo {
   version: { current: string };
-  github?: { issue_url: string; issue_number: number };
+  github?: { release_url: string };
   features?: string[];
   metadata?: Record<string, string>;
 }
