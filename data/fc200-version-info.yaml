@@ -1,0 +1,20 @@
+# アプリケーションのバージョン情報
+version:
+  current: "v0.8.0"
+
+# GitHubリンク情報（リリースURL）
+github:
+  release_url: "https://github.com/KenichiroArai/cursor-usage/releases/tag/v0.8.0"
+
+# 機能概要
+features:
+  - "Cursor使用状況の総合的な記録・分析"
+  - "使用統計とグラフによる可視化"
+  - "コスト分析とトークン使用量の追跡"
+  - "使用イベントの詳細な記録"
+
+# その他のメタ情報
+metadata:
+  title: "アプリケーション情報"
+  description: "Cursor使用状況管理アプリケーション"
+  last_updated: "2024-09-18"
