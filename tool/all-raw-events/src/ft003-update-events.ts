@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const baseDir = path.join(__dirname, '..'); // tool/all-raw-events
 const projectRoot = path.join(baseDir, '..', '..');
-const dataDir = path.join(projectRoot, 'data');
+const dataDir = path.join(projectRoot, 'public', 'data');
 
 function parseCSVLine(line: string): string[] {
   const values: string[] = [];

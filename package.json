@@ -4,13 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "predev": "node scripts/copy-data.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "tool:update-events": "tsx tool/all-raw-events/src/ft003-update-events.ts",
-    "tool:calc-api-cost": "tsx tool/all-raw-events/src/ft004-calc-api-cost.ts",
-    "prebuild": "node scripts/copy-data.js"
+    "tool:calc-api-cost": "tsx tool/all-raw-events/src/ft004-calc-api-cost.ts"
   },
   "dependencies": {
     "bootstrap": "^5.3.0",

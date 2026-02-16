@@ -37,7 +37,7 @@ export function Fa001Dashboard() {
       if (u.status === 'fulfilled') setUsageEvents(u.value);
       else console.warn('UsageEvents load failed:', u.reason);
       const failed = [r, s, u].filter((x) => x.status === 'rejected').length;
-      if (failed === 3) setError('データの読み込みに失敗しました。data/ に record.xlsx と usage-events.csv を配置してください。');
+      if (failed === 3) setError('データの読み込みに失敗しました。public/data/ に record.xlsx と usage-events.csv を配置してください。');
     }).finally(() => setLoading(false));
   }, []);
 

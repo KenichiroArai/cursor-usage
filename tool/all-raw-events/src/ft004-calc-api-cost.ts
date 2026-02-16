@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const baseDir = path.join(__dirname, '..'); // tool/all-raw-events
 const projectRoot = path.join(baseDir, '..', '..');
-const CSV_PATH = path.join(projectRoot, 'data', 'usage-events.csv');
+const CSV_PATH = path.join(projectRoot, 'public', 'data', 'usage-events.csv');
 const SCRIPT_NAME = path.basename(process.argv[1] || fileURLToPath(import.meta.url));
 
 function isNumeric(value: unknown): boolean {
