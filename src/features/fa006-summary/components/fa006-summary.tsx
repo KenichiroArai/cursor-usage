@@ -52,10 +52,10 @@ function processModelData(
   fieldName: keyof SummaryRecord
 ): { modelData: Record<string, Record<string, number>>; uniqueDates: string[] } {
   const modelData: Record<string, Record<string, number>> = {};
+  // 旧仕様: modelData のキーは record.dateStr と一致させる必要がある（YYYY-MM-DD）。
+  // uniqueDates も同じ形式でソートした配列にし、ラベル用の ja-JP 変換は buildStackedBarChartData で行う。
   const uniqueDates = Array.from(new Set(summaryData.map((r) => r.dateStr)))
-    .map((dateStr) => new Date(dateStr))
-    .sort((a, b) => a.getTime() - b.getTime())
-    .map((d) => d.toLocaleDateString('ja-JP'));
+    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
   summaryData.forEach((record) => {
     const model = record.model;
@@ -150,8 +150,13 @@ function buildStackedBarChartData(
     });
   });
 
+  // X軸ラベルは旧ページ同様 toLocaleDateString('ja-JP') で表示
+  const labels = uniqueDates.map((d) =>
+    new Date(d).toLocaleDateString('ja-JP')
+  );
+
   return {
-    labels: uniqueDates,
+    labels,
     datasets,
   };
 }
@@ -315,7 +320,7 @@ export function Fa006Summary() {
         intersect: false,
         callbacks: {
           label: (context: {
-            dataset: { label?: string };
+            dataset: { label?: string; stack?: string };
             parsed: { y: number | null };
           }) => {
             const v = context.parsed.y ?? 0;
@@ -325,6 +330,33 @@ export function Fa006Summary() {
             return `${context.dataset.label ?? ''}: ${
               isCur ? `$${v.toFixed(4)}` : v.toLocaleString()
             }`;
+          },
+          afterBody: (
+            context: Array<{
+              dataset?: { stack?: string; label?: string };
+              parsed?: { y?: number | null };
+            }>
+          ) => {
+            const modelTotals: Record<string, number> = {};
+            let isCurrency = false;
+            context.forEach((item) => {
+              const stack = item.dataset?.stack;
+              if (stack) {
+                const model = stack.split('_')[0];
+                modelTotals[model] =
+                  (modelTotals[model] ?? 0) + (item.parsed?.y ?? 0);
+              }
+              if (
+                item.dataset?.label?.includes('API Cost') ||
+                item.dataset?.label?.includes('Cost to You')
+              )
+                isCurrency = true;
+            });
+            return Object.entries(modelTotals).map(([model, total]) =>
+              isCurrency
+                ? `${model}: $${total.toFixed(4)}`
+                : `${model}: ${total.toLocaleString()}`
+            );
           },
         },
       },
@@ -340,6 +372,23 @@ export function Fa006Summary() {
               ? Number.isInteger(value)
                 ? value.toLocaleString()
                 : `$${value.toFixed(4)}`
+              : value,
+        },
+      },
+    },
+  };
+
+  /** 通貨グラフ（API Cost / Cost to You）用：Y軸を $x.xxxx 形式で表示 */
+  const chartOptionsCurrency = {
+    ...chartOptionsBase,
+    scales: {
+      ...chartOptionsBase.scales,
+      y: {
+        ...chartOptionsBase.scales.y,
+        ticks: {
+          callback: (value: number | string) =>
+            typeof value === 'number'
+              ? `$${Number(value).toFixed(4)}`
               : value,
         },
       },
@@ -414,7 +463,9 @@ export function Fa006Summary() {
                           <div className="stat-item">
                             <span className="stat-label">最新使用日:</span>
                             <span className="stat-value">
-                              {latest?.dateStr ?? '-'}
+                              {latest?.date
+                                ? latest.date.toLocaleDateString('ja-JP')
+                                : '-'}
                             </span>
                           </div>
                           <div className="stat-item">
@@ -523,7 +574,7 @@ export function Fa006Summary() {
                         </div>
                         <div className="mt-2">
                           <small className="text-muted">
-                            <i className="bi bi-info-circle" /> 括弧内の数値は前日との差です。
+                            <i className="bi bi-info-circle" /> ① 括弧内の数値は前日との差です。
                             <span className="text-success">緑色</span>
                             は増加、
                             <span className="text-danger">赤色</span>
@@ -534,11 +585,6 @@ export function Fa006Summary() {
                         </div>
                       </div>
                     </div>
-                    {latest && (
-                      <div className="usage-info">
-                        {`Total: ${latest.total.toLocaleString()}\nCache Read: ${latest.cacheRead.toLocaleString()}\nCache Write: ${latest.cacheWrite.toLocaleString()}\nInput: ${latest.input.toLocaleString()}\nOutput: ${latest.output.toLocaleString()}\nAPI Cost: ${latest.apiCost}\nCost to You: ${latest.costToYou}`}
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
@@ -590,9 +636,9 @@ export function Fa006Summary() {
                         datasets: apiCostChartData.datasets,
                       }}
                       options={{
-                        ...chartOptionsBase,
+                        ...chartOptionsCurrency,
                         plugins: {
-                          ...chartOptionsBase.plugins,
+                          ...chartOptionsCurrency.plugins,
                           title: {
                             display: true,
                             text: 'API Cost 積立推移',
@@ -618,9 +664,9 @@ export function Fa006Summary() {
                         datasets: costToYouChartData.datasets,
                       }}
                       options={{
-                        ...chartOptionsBase,
+                        ...chartOptionsCurrency,
                         plugins: {
-                          ...chartOptionsBase.plugins,
+                          ...chartOptionsCurrency.plugins,
                           title: {
                             display: true,
                             text: 'Cost to You 積立推移',
@@ -833,7 +879,7 @@ export function Fa006Summary() {
                           ? calculateDifferenceWithReset(val, prevVal)
                           : null;
                       const text = val.toLocaleString();
-                      if (diff != null && diff !== 0) {
+                      if (diff !== null && diff !== 0) {
                         return (
                           <>
                             {text}{' '}
@@ -858,7 +904,7 @@ export function Fa006Summary() {
                           ? calculateDifferenceWithReset(cur, prev)
                           : null;
                       const text = val || '0';
-                      if (diff != null && diff !== 0) {
+                      if (diff !== null && diff !== 0) {
                         return (
                           <>
                             {text}{' '}
@@ -872,7 +918,9 @@ export function Fa006Summary() {
                     };
                     return (
                       <tr key={`${row.dateStr}-${row.model}-${idx}`}>
-                        <td>{row.dateStr}</td>
+                        <td>
+                          {row.date.toLocaleDateString('ja-JP')}
+                        </td>
                         <td>{row.model}</td>
                         <td className="text-end">
                           {renderNum(
