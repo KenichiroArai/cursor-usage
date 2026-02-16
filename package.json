@@ -1,6 +1,6 @@
 {
   "name": "cursor-usage",
-  "version": "0.8.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
