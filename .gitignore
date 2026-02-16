@@ -78,6 +78,9 @@ web_modules/
 .next
 out
 
+# Build-time data copy (source of truth is data/)
+public/data/
+
 # Nuxt.js build / generate output
 .nuxt
 dist
