@@ -1,4 +1,6 @@
 Date,Kind,Model,Max Mode,Input (w/ Cache Write),Input (w/o Cache Write),Cache Read,Output Tokens,Total Tokens,Cost
+2026-05-17T15:46:19.823Z,free,auto,No,0,8764,200704,5630,215098,0.09
+2026-05-17T15:41:16.872Z,free,auto,No,0,33883,646144,11226,691253,0.27
 2026-05-14T16:04:10.215Z,free,auto,No,0,12663,22016,184,34863,0.02
 2026-05-14T15:48:56.830Z,free,auto,No,,,,,,Free
 2026-05-14T15:36:41.212Z,free,auto,No,0,18179,147200,2779,168158,0.08
