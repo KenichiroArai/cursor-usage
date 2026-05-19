@@ -1,0 +1,4 @@
+Date,Cloud Agent ID,Automation ID,Kind,Model,Max Mode,Input (w/ Cache Write),Input (w/o Cache Write),Cache Read,Output Tokens,Total Tokens,Cost
+"2026-05-18T16:14:00.566Z","","","free","auto","No","0","13571","120576","2377","136524","0.06"
+"2026-05-18T16:05:02.105Z","","","free","auto","No","0","4303","199424","2137","205864","0.07"
+"2026-05-18T15:59:32.859Z","","","free","auto","No","0","43989","240640","2536","287165","0.13"
