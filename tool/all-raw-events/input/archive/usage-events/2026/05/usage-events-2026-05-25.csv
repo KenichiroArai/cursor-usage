@@ -1,0 +1,9 @@
+Date,Cloud Agent ID,Automation ID,Kind,Model,Max Mode,Input (w/ Cache Write),Input (w/o Cache Write),Cache Read,Output Tokens,Total Tokens,Cost
+"2026-05-24T16:09:14.974Z","","","Included","auto","No","0","11035","168741","6289","186065","Included"
+"2026-05-24T16:03:25.538Z","","","Included","auto","No","0","46345","170851","8191","225387","Included"
+"2026-05-24T15:22:40.635Z","","","Included","auto","No","0","17762","168578","2048","188388","Included"
+"2026-05-24T15:19:40.831Z","","","Included","auto","No","0","2963","93399","1892","98254","Included"
+"2026-05-24T15:17:27.468Z","","","Included","auto","No","0","2098","85612","1947","89657","Included"
+"2026-05-24T15:16:09.974Z","","","Included","auto","No","0","1946","25586","966","28498","Included"
+"2026-05-24T15:12:38.074Z","","","Included","auto","No","0","21137","76995","2238","100370","Included"
+"2026-05-24T15:01:38.633Z","","","Included","auto","No","0","16690","157981","3648","178319","Included"
