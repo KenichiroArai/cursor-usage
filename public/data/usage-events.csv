@@ -1,4 +1,9 @@
 Date,Kind,Model,Max Mode,Input (w/ Cache Write),Input (w/o Cache Write),Cache Read,Output Tokens,Total Tokens,Cost
+2026-06-17T15:39:29.720Z,Included,auto,No,0,9454,389955,2324,401733,Included
+2026-06-17T15:25:25.147Z,Included,auto,No,0,86182,1841116,19043,1946341,Included
+2026-06-17T15:19:38.582Z,Included,auto,No,0,72418,383302,6009,461729,Included
+2026-06-17T15:19:36.828Z,Included,auto,No,0,32326,201109,4102,237537,Included
+2026-06-17T15:19:31.376Z,Included,auto,No,0,36845,285022,6087,327954,Included
 2026-06-16T15:41:39.171Z,Included,auto,No,0,49496,590694,8822,649012,Included
 2026-06-16T15:25:02.299Z,Included,auto,No,0,186200,1711192,12701,1910093,Included
 2026-06-16T15:08:36.622Z,Included,auto,No,0,53235,1281536,8632,1343403,Included
