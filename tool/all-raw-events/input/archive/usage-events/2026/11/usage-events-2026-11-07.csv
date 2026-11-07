@@ -1,4 +1,7 @@
 Date,Cloud Agent ID,Automation ID,Kind,Model,Max Mode,Input (w/ Cache Write),Input (w/o Cache Write),Cache Read,Output Tokens,Total Tokens,Cost
+"2026-11-07T13:43:30.555Z","","","Included","auto","No","0","20147","53376","1859","75382","Included"
+"2026-11-07T13:43:07.842Z","","","Included","auto","No","0","28474","34432","1375","64281","Included"
+"2026-11-07T13:37:45.233Z","","","Included","auto","No","0","58291","272256","6279","336826","Included"
 "2026-11-04T15:36:13.958Z","","","Included","claude-sonnet-5-5-high","No","108551","94","3466597","27814","3603056","Included"
 "2026-11-04T15:33:18.069Z","","","Included","claude-sonnet-5-5-high","No","43025","22","431352","11183","485582","Included"
 "2026-11-04T15:31:42.550Z","","","Included","claude-sonnet-5-5-high","No","43020","20","299710","13005","355755","Included"
