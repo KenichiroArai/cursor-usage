@@ -1,4 +1,21 @@
 Date,Kind,Model,Max Mode,Input (w/ Cache Write),Input (w/o Cache Write),Cache Read,Output Tokens,Total Tokens,Cost
+2026-11-20T15:14:33.129Z,Included,auto,No,,,,,,Free
+2026-11-20T15:14:32.171Z,Included,auto,No,14622,8,84473,3137,102240,Included
+2026-11-20T15:12:49.310Z,Included,auto,No,,,,,,Free
+2026-11-20T15:12:48.371Z,Included,auto,No,1965,6,43042,1217,46230,Included
+2026-11-20T15:11:28.543Z,Included,auto,No,12936,12,73931,2859,89738,Included
+2026-11-20T15:09:52.275Z,Included,auto,No,14904,10,60133,3166,78213,Included
+2026-11-20T15:09:43.315Z,Included,auto,No,16220,14,92044,4051,112329,Included
+2026-11-20T15:06:00.084Z,Included,auto,No,56365,20,479239,6982,542606,Included
+2026-11-20T15:04:42.194Z,Included,auto,No,,,,,,Free
+2026-11-20T15:04:41.224Z,Included,auto,No,38581,12,165156,3626,207375,Included
+2026-11-20T15:02:27.398Z,Included,auto,No,,,,,,Free
+2026-11-20T15:02:26.285Z,Included,auto,No,13856,8,48607,2001,64472,Included
+2026-11-20T14:43:05.827Z,Included,auto,No,7669,6,22447,2605,32727,Included
+2026-11-20T14:37:33.116Z,Included,auto,No,,,,,,Free
+2026-11-20T14:37:31.937Z,Included,auto,No,4626,6,67656,1861,74149,Included
+2026-11-20T14:32:50.138Z,Included,auto,No,,,,,,Free
+2026-11-20T14:32:48.982Z,Included,auto,No,23770,4,7920,3215,34909,Included
 2026-11-19T15:12:26.206Z,Included,auto,No,,,,,,Free
 2026-11-19T15:12:25.146Z,Included,auto,No,19441,6,34617,2981,57045,Included
 2026-11-19T15:00:54.828Z,Included,auto,No,,,,,,Free
